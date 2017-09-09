@@ -19,11 +19,18 @@ reports {
 
 dataSources {
 
+	java.net.URI dbUri = new java.net.URI(System.getenv("DATABASE_URL"));
+	
+	String username = dbUri.getUserInfo().split(":")[0];
+	String password = dbUri.getUserInfo().split(":")[1];
+	String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+	
+	
 	jdbc1 {
-		driver = "net.sourceforge.jtds.jdbc.Driver"
-		url = 'jdbc:jtds:sqlserver://localhost:1433/Benchmark;instance=SQLEXPRESS'
-		usr = "benchmark"
-		pwd = "benchmark"
+		driver = "org.postgresql.Driver"
+		url = dbUrl
+		usr = username
+		pwd = password
 		
 	}
 	jdbc2 {

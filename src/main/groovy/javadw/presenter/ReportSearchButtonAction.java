@@ -35,7 +35,7 @@ public class ReportSearchButtonAction implements Button.ClickListener, ValueChan
 		} else {
 			List<Report> filtered = new ArrayList<Report>();
 			for (Report r : Init.getReports()) {
-				if (r.getName().toLowerCase().contains(sc.toLowerCase())) {
+				if (r.getDisplayName().toLowerCase().contains(sc.toLowerCase())) {
 					filtered.add(r);
 				}
 			}

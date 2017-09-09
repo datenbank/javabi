@@ -6,25 +6,27 @@ import groovy.sql.Sql
 class Init {
 	static dataSources = [:]
 	static List<Report> reports;
-	
+
 	static String context = ""
-	
+
 	static init(String folder) {
 		reports = new ArrayList<Report>()
 		def config = new ConfigSlurper().parse(new File("${folder}Conf.groovy").text)
-		
+
 		context = config.context
-			
+
 		config.dataSources.each {
+			try {
+				def sql = Sql.newInstance(
+						config.dataSources."$it.key".url
+						, config.dataSources."$it.key".usr
+						, config.dataSources."$it.key".pwd
+						, config.dataSources."$it.key".driver)
 
-			def sql = Sql.newInstance(
-					config.dataSources."$it.key".url
-					, config.dataSources."$it.key".usr
-					, config.dataSources."$it.key".pwd
-					, config.dataSources."$it.key".driver)
 
-
-			dataSources.putAt("$it.key", sql.connection)
+				dataSources.putAt("$it.key", sql.connection)
+			} catch(all) {
+			}
 		}
 
 		config.reports.each {
@@ -38,12 +40,12 @@ class Init {
 			}
 			reports << r
 		}
-	}	
-	
+	}
+
 	static List<Report> getReports() {
 		return reports
 	}
-	
+
 	static Report getReport(String name) {
 		def report
 		reports.each {
