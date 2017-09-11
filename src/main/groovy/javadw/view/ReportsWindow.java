@@ -43,7 +43,6 @@ public class ReportsWindow extends VerticalLayout implements IReportSearchable, 
 
 		// +Search section start
 		HorizontalLayout searchLayout = new HorizontalLayout();
-		searchField.setWidth("300px"); 
 		searchLayout.addComponent(searchField);
 		searchLayout.addComponent(searchButton);
 		addComponent(searchLayout);
@@ -61,13 +60,16 @@ public class ReportsWindow extends VerticalLayout implements IReportSearchable, 
 			return img;
 							
 			
-		}).setWidth(75).setMaximumWidth(75).setSortable(false);
+		}).setExpandRatio(0).setMaximumWidth(75).setSortable(false);
 		
-		grid.addColumn(Report::getDisplayName).setWidth(300).setCaption(Messages.getString("ReportsWindow.ReportColumnLabel")); 
-		grid.addColumn(Report::getGroup).setCaption(Messages.getString("ReportsWindow.GroupColumnLabel")); 
+		grid.addColumn(Report::getDisplayName).setExpandRatio(1).setCaption(Messages.getString("ReportsWindow.ReportColumnLabel")); 
+		grid.addColumn(Report::getGroup).setExpandRatio(2).setCaption(Messages.getString("ReportsWindow.GroupColumnLabel")); 
 		grid.setWidth("100%"); //$NON-NLS-1$
 		grid.setSelectionMode(SelectionMode.SINGLE);
 		addComponent(grid);
+		
+		
+		
 		// -Grid section end
 		
 	}
